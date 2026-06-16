@@ -1,7 +1,35 @@
 import tkinter as tk 
+from tkinter import ttk, messagebox
+
+
+#functions
+def submit_item():
+    name= name_entry.get().strip()
+    item_hired = item_entry.get().strip()
+    
+    if name== "":
+        messagebox.showerror("Input Error", "Name cannot be blank")
+        return
+
+    if item_hired == "":
+        messagebox.showerror("Input Error", "Item hired cannot be blank")
+        return
+
+    print(name)
+    print(item_hired)    
+
+
+
+
+
+
+
+
+
+
 
 #Main window 
-root =tk.Tk()
+root=tk.Tk()
 root.title("Party Hire Shop")
 root.geometry("700x200")
 
@@ -30,7 +58,7 @@ number_hired_entry.grid(row = 3, column= 1, padx=10, pady=5)
 append_details_button = tk.Button(root, text="Append details")
 append_details_button.grid(row=0,column=3 , columnspan= 2, pady=10, padx=10)
 
-print_details_button = tk.Button(root, text="Print details")
+print_details_button = tk.Button(root, text="Print details", command= submit_item)
 print_details_button.grid(row=0,column=4 , columnspan= 2, pady=10, padx=10)
 
 quit_button = tk.Button(root, text="Quit")
