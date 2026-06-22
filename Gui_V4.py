@@ -11,18 +11,13 @@ def submit_item():
     name= name_entry.get().strip()
     item_hired = selected_item.get().strip()
     items = number_hired_entry.get().strip()
-    recipt_num = recipt_entry.get().strip()
-
+    receipt_num = receipt_entry.get().strip()
+    #If the name is blank
     if name== "":
         messagebox.showerror("Input Error", "Name cannot be blank")
         return
-    #Handles what Item is hired
-    if item_hired == "":
-        messagebox.showerror("Input Error", "Item hired cannot be blank")
-        return
-
-    #Handles the number hired
     
+    #Handles the number hired
     try:
         items = int(items)
     except ValueError:
@@ -35,12 +30,22 @@ def submit_item():
         messagebox.showerror("Input Error","please enter an integer that is less than 500.")
         return
 
+    #Handles the receipt number
+    if receipt_num == "":
+        messagebox.showerror("Input Error",  "Receipt number cannot be empty")
+        return
+    try:
+        receipt_num = int(float(receipt_num))
+    except ValueError:
+        messagebox.showerror("Input Error", "Receipt number must be a number")
+    
 
 
 
     print(name)
     print(item_hired)    
     print(items)
+    print(receipt_num)
 
 
 
@@ -60,9 +65,9 @@ tk.Label(root, text="Name:").grid(row = 0, column= 0, padx=10, pady=5, sticky="e
 name_entry = tk.Entry(root)
 name_entry.grid(row = 0, column= 1, padx=10, pady=5)
 
-tk.Label(root, text="Recipt Number:").grid(row = 1, column= 0, padx=10, pady=5, sticky="e")
-recipt_entry = tk.Entry(root)
-recipt_entry.grid(row = 1, column= 1, padx=10, pady=5)
+tk.Label(root, text="Receipt Number:").grid(row = 1, column= 0, padx=10, pady=5, sticky="e")
+receipt_entry = tk.Entry(root)
+receipt_entry.grid(row = 1, column= 1, padx=10, pady=5)
 
 #Dropdown
 tk.Label(root, text="Item hired:").grid(row = 2, column= 0, padx=10, pady=5, sticky="e")
@@ -78,7 +83,6 @@ number_hired_entry = tk.Entry(root)
 number_hired_entry.grid(row = 3, column= 1, padx=10, pady=5)
 
 #Buttons
-
 submit_details_button = tk.Button(root, text="Submit details", command= submit_item)
 submit_details_button.grid(row=4,column=1 , columnspan= 1, pady=10)
 
