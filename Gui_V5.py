@@ -2,13 +2,30 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from datetime import date
 
-def Two_commands():
-    submit_item()
-    print_out()
+
+def print_heading():
+    today = date.today()
+    statement = f"Hire Data ({today})"        
+    heading= f"|================{ statement }================|"                
+
+    heading_output = heading + "\n"
+    heading_output += "\nName  e     | Item Hired | Number Hired    | Recipt Number     | \n"
+        
+    with open("Hire_data.txt", "w") as file:
+        file.write(heading_output)
+        file.flush()
+
+
+def print_to_txt(name,item_hired,items,receipt_num):
+    output = f"{name:<10} | {item_hired:<10} | {items:<10} | {receipt_num:<10}|\n"
+    with open("Hire_data.txt", "a")as file:
+        file.write(output)
+    print(output)
+print_to_txt()
 
 def submit_item():
     name= name_entry.get().strip()
-    item_hired = selected_item.get().strip()
+    item_hired= selected_item.get()
     items = number_hired_entry.get().strip()
     receipt_num = receipt_entry.get().strip()
     
@@ -43,30 +60,13 @@ def submit_item():
     except ValueError:
         messagebox.showerror("Input Error", "Receipt number must be a number")
         return
-
-
-def save_to_file(output):
-    file = open("Hire_data.txt", "w")
-    file.write(output)
-    file.close()
-
-def print_out():
-    today = date.today()
-    heading = make_statement(f"Hire Data ({today})", "=")
-
-    output = heading + "\n"
-    output += "\nName       | Item Hired | Number Hired    | Recipt Number     | \n"
-    output += f"{name_entry.get():<10} | {selected_item.get():<10} | {number_hired_entry.get():<15} | {receipt_entry.get():<18}|\n"
     
-    save_to_file(output)
-    print(output)
+    print_to_txt(name,item_hired,items,receipt_num)
+print_heading()
 
-def make_statement(statement, decoration):
-    return f"{decoration * 3} {statement} {decoration * 3}"
+    
 
-
-
-
+    
 
 #--------------------------------------------------------| Tkinter |----------------------------------------------------------
 
@@ -124,7 +124,7 @@ number_hired_entry.grid(row = 3, column= 1, padx=10, pady=5)
 number_hired_entry.config(fg= FG_Colour)
 
 #Takes the data that the user has entered 
-submit_details_button = tk.Button(root, text="Submit details", command= Two_commands)
+submit_details_button = tk.Button(root, text="Submit details", command= submit_item)
 submit_details_button.grid(row=4,column=1 , columnspan= 1, pady=10)
 
 #Ends the program
