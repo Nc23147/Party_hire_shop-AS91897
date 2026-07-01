@@ -7,11 +7,24 @@ active_hires = []
 def process_return():
     selected_name = return_dropdown.get()
     
+
+
+
     if not selected_name:
         messagebox.showerror("Input error", "No user selected for return")
         return
 
-    for hire in active_hires:
+    with open("Hire_data.txt",'r') as file:
+        lines = file.readlines()
+
+    for line in lines:
+        if line.startswith(f{selected_name}):
+            for hire in active_hires
+
+
+
+        
+        
         if hire["name"] == selected_name:
             messagebox.showinfo("Success", "Return Successful")
         active_hires.remove(hire)
@@ -19,7 +32,7 @@ def process_return():
 
     print_heading()
     for remaining in active_hires:
-        print_to_txt(remaining["name"],remaining["item"],remaining["quantity"],remaining["receipt"],)
+        print_to_txt(remaining["name"],remaining["item"],remaining["quantity"],remaining["receipt"],remaining["stat"])
 
     new_names= [hire["name"]for hire in active_hires]
     return_dropdown['values'] = new_names
@@ -28,6 +41,10 @@ def process_return():
     else:
         return_dropdown.set("")
 
+
+
+
+
 #Creates the heading in the .txt file
 def print_heading():
     today = date.today()
@@ -35,7 +52,7 @@ def print_heading():
     heading= f"|================{ statement }================|"                
 
     heading_output = heading + "\n"
-    heading_output += "\nName       | Item Hired | Number Hired    | Recipt Number     | Returned |\n"
+    heading_output += "\nName       | Item Hired | Number Hired    | Recipt Number     | Status |\n"
         
     with open("Hire_data.txt", "w") as file:
         file.write(heading_output)
@@ -43,7 +60,7 @@ def print_heading():
 
 #Data from inputs. Stores it into a .txt
 def print_to_txt(name,item_hired,items,receipt_num):
-    output = f"{name:<10} | {item_hired:<10} | {items:<10} | {receipt_num:<10}|\n"
+    output = f"{name:<12} | {item_hired:<12} | {items:<12} | {receipt_num:<12}|{status:<8}\n"
     with open("Hire_data.txt", "a")as file:
         file.write(output)
     print(output)
@@ -59,6 +76,7 @@ def submit_item():
     if not name:
         messagebox.showerror("Input Error", "Name cannot be blank")
         return
+
     #Handles the number of items hired
     if items == "":
         messagebox.showerror("Input Error","Number of items cannot be blank")    
@@ -92,7 +110,9 @@ def submit_item():
         "name":name,
         "item": item_hired,
         "quantity":items,
-        "receipt" :receipt_num
+        "receipt" :receipt_num,
+        "Status" : ""
+
     })
     return_dropdown['values']=[hire["name"]for hire in active_hires]
     return_dropdown.current(0)
@@ -166,7 +186,7 @@ submit_details_button = tk.Button(root, text="Submit details", command= submit_i
 submit_details_button.grid(row=4,column=1 , columnspan= 1, pady=10)
 
 #Ends the program
-quit_button = tk.Button(root, text="Quit")
+quit_button = tk.Button(root, text="Quit", command=root.destroy)
 quit_button.grid(row=4,column=0 , columnspan= 1, pady=10)
 
 
